@@ -46,6 +46,65 @@ def regra_um(tabela):
             i = i + 1
 
 
+#regra para ter um por coluna
+def um_por_coluna(tabela):
+    _clausulas = ""
+    __clausulas = ""
+    _tabela = []
+    for x in tabela:
+        _tabela.append([])
+    for x in tabela:
+        for y in range(len(x)):
+            _tabela[y].append(x[y])
+    
+    _conj = []
+    conj =  inicialiando_conj(N)
+    
+    for x in tabela:
+        for y in range(len(x)):
+            conj[y].append(x[y])
+        
+    print(conj)
+    for x in _conj:
+        for y in x:
+            for z in y:
+                __clausulas = __clausulas +str(z) + ' '
+                for a in y:
+                    if a != z:
+                        _clausulas = _clausulas + '-'+str(z) + ' -' + str(a) + ' ' + str(0)+ '\n'
+            __clausulas = __clausulas + str(0) + '\n'
+    
+    return _clausulas,__clausulas
+
+# tabela = construir_tabela(N)
+# #print("UM POR POSICAO+++++==================")
+# clausulas,clausulas2 = um_por_posicao(tabela)
+# # print("C1========+++++")
+# # print(clausulas2)
+# # print("C2==============+++++++")
+# # print(clausulas)
+# # print("+==================+")
+# Um_pl,um_pl2 = um_por_linha(tabela)
+# #print(tabela)
+
+# a = teste(tabela)
+# Um_pc , um_pc2 = um_por_linha(a)
+
+# # print("UM POR COLUNA+++++==================")
+# # print("C1========+++++")
+# # print(Um_pc)
+# # print("C2========+++++")
+# # print(um_pc2)
+# # print("+==================+")
+
+# # print("UM POR LINHA+++++==================")
+# # print("C1========+++++")
+# # print(Um_pl)
+# # print("C2========+++++")
+# # print(um_pl2)
+# # print("+==================+")
+
+
 
 
 001 = 1

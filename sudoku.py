@@ -1,5 +1,6 @@
 import sys
-print(sys.argv[1])
+import time
+#print(sys.argv[1])
 N = sys.argv[1]
 N = int(float(N))
 len_table = N**3
@@ -24,19 +25,23 @@ def construir_tabela(N):
 
 #regra para ter pelo menos um em cada posicao
 def um_por_posicao(tabela):
-    _clausulas = ""
-    __clausulas = ""
+    #No maximo um por posicao
+    _maximo_um_pp = ""
+    #Pelo menos um por posicao
+    _ao_menos_um_pp = ""
     for x in tabela:
         for y in x:
             for z in y:
-                __clausulas = __clausulas +str(z) + ' '
+                _ao_menos_um_pp = _ao_menos_um_pp +str(z) + ' '
                 for a in y:
                     if z != a:
-                        _clausulas = _clausulas + '-'+str(z)+' -'+str(a)+' '+str(0)+'\n'
-            __clausulas = __clausulas + str(0) + '\n'
-    return _clausulas,__clausulas
+                        _maximo_um_pp = _maximo_um_pp + '-'+str(z)+' -'+str(a)+' '+str(0)+'\n'
+            _ao_menos_um_pp = _ao_menos_um_pp + str(0) + '\n'
+    return _ao_menos_um_pp,_maximo_um_pp
 
-#inicializando conjunto com n conjuntos vazios
+
+#Funcao Auxiliar
+#Inicializando conjunto com n conjuntos vazios
 def inicialiando_conj(N):
     conj = []
     for x in range(N):
@@ -46,11 +51,12 @@ def inicialiando_conj(N):
     
 
 
-#regra para ter um por linha
+#Regra para ter um por linha
 def um_por_linha(tabela):
-    _clausulas = ""
-    __clausulas = ""
-    tam_linha =  N*N
+    #No maximo um por linha
+    _maximo_um_pl = ""
+    #Pelo menos um por linha
+    _ao_menos_um_pl = ""
     _conj = []
     conj =  inicialiando_conj(N)
     
@@ -64,87 +70,75 @@ def um_por_linha(tabela):
     for x in _conj:
         for y in x:
             for z in y:
-                __clausulas = __clausulas +str(z) + ' '
+                _ao_menos_um_pl = _ao_menos_um_pl +str(z) + ' '
                 for a in y:
                     if a != z:
                         if a == y[len(y)-1] and y == x[len(x)-1]:
-                            _clausulas = _clausulas + '-'+str(z) + ' -' + str(a) + ' ' + str(0) + '\n'
+                            _maximo_um_pl = _maximo_um_pl + '-'+str(z) + ' -' + str(a) + ' ' + str(0) + '\n'
                         else:
-                            _clausulas = _clausulas + '-'+str(z) + ' -' + str(a) + ' ' + str(0)+ '\n'
+                            _maximo_um_pl = _maximo_um_pl + '-'+str(z) + ' -' + str(a) + ' ' + str(0)+ '\n'
 
-            __clausulas = __clausulas + str(0) + '\n'
+            _ao_menos_um_pl = _ao_menos_um_pl + str(0) + '\n'
     
-    return _clausulas,__clausulas
+    return _ao_menos_um_pl,_maximo_um_pl
                     
 
-#regra para ter um por coluna
+#regra para ter um por coluna (UTILIZA UM POR LINHA)
 def um_por_coluna(tabela):
-    _clausulas = ""
-    __clausulas = ""
-    _tabela = []
-    for x in tabela:
-        _tabela.append([])
-    for x in tabela:
-        for y in range(len(x)):
-            _tabela[y].append(x[y])
-    
-    _conj = []
-    conj =  inicialiando_conj(N)
-    
-    for x in tabela:
-        for y in range(len(x)):
-            conj[y].append(x[y])
-        
-    print(conj)
-    for x in _conj:
-        for y in x:
-            for z in y:
-                __clausulas = __clausulas +str(z) + ' '
-                for a in y:
-                    if a != z:
-                        _clausulas = _clausulas + '-'+str(z) + ' -' + str(a) + ' ' + str(0)+ '\n'
-            __clausulas = __clausulas + str(0) + '\n'
-    
-    return _clausulas,__clausulas
-def teste(tabela):
     conj = inicialiando_conj(N)
     for x in tabela:
         for y in range(len(x)):
             conj[y % N].append(x[y])
+    
+    _ao_menos_um_pl,_maximo_um_pl = um_por_linha(conj)
 
-    return conj
+    return _ao_menos_um_pl,_maximo_um_pl
 
+    
 
+# a = teste(tabela)
+# Um_pc , um_pc2 = um_por_linha(a)
 
-
+#Construindo a tabela
 tabela = construir_tabela(N)
-print("UM POR POSICAO+++++==================")
-clausulas,clausulas2 = um_por_posicao(tabela)
-print("C1========+++++")
-print(clausulas2)
-print("C2==============+++++++")
-print(clausulas)
-print("+==================+")
-Um_pl,um_pl2 = um_por_linha(tabela)
-#print(tabela)
 
-a = teste(tabela)
-Um_pc , um_pc2 = um_por_linha(a)
+#Regra 1 e 2 : Um por posicao
+#1 Pelo menos um por posicao
+#2 No maximo Um por posicao
+# verifica o tempo de resposta da função
+ini = time.time()
+regra_1, regra_2 = um_por_posicao(tabela)
+fim = time.time()
+t_1_2 = fim-ini
+#print(regra_1)
+#print(regra_2)
 
-print("UM POR COLUNA+++++==================")
-print("C1========+++++")
-print(Um_pc)
-print("C2========+++++")
-print(um_pc2)
-print("+==================+")
+#Regra 3 e 4 : Um por linha
+#3 Pelo menos um por linha(um mesmo elemento)
+#4 No maximo um por linha(um mesmo elemento)
+# verifica o tempo de resposta da função
+ini = time.time()
+regra_3, regra_4 = um_por_linha(tabela)
+fim = time.time()
+t_3_4 = fim-ini
+# print(regra_3)
+# print(regra_4)
 
-print("UM POR LINHA+++++==================")
-print("C1========+++++")
-print(Um_pl)
-print("C2========+++++")
-print(um_pl2)
-print("+==================+")
+#Regra 5 e 6 : Um por Coluna
+#5 Pelo menos um por Coluna(um mesmo elemento)
+#6 No maximo um por Coluna(um mesmo elemento)
+# verifica o tempo de resposta da função
+ini = time.time()
+regra_5, regra_6 = um_por_coluna(tabela)
+fim = time.time()
+t_5_6 = fim-ini
+# print(regra_5)
+# print(regra_6)
 
-clausulas_final = Um_pc + um_pc2 + Um_pl + um_pl2 + clausulas + clausulas2[:len(clausulas2)-1]
+
+clausulas_final = regra_1 + regra_2 + regra_3 + regra_4 + regra_5 + regra_6[:len(regra_6)-1]
 
 print(clausulas_final)
+# print(len(clausulas_final))
+print ("Regra 1-2: ",t_1_2,"Regra 3-4: ",t_3_4,"Regra 5-6: ",t_5_6)
+
