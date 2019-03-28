@@ -1,0 +1,61 @@
+def mostrar_tabela(tabela):
+    for x in tabela:
+        print(x)
+
+def mostrar_tabela2(tabela):
+    for x in tabela:
+        for y in x:
+            print(y)
+
+def apenas_um_na_linha_e_coluna(i,n,Tabela):
+    aux = i
+    elementos_que_tem_que_estar_negados = []
+    count = 0
+    if i > n:
+        count = i - n
+        while(i > n and i > 0):
+            i = count
+            elementos_que_tem_que_estar_negados.append(i)
+            count = i - n
+        i = aux
+        if i < (len_table - 3):
+            count = i + n
+            while(i < len_table ):
+                i = count
+                elementos_que_tem_que_estar_negados.append(i)
+                count = i + n
+        i = aux
+
+
+    elif i <= n:
+        count = i + n
+        while(i < len_table ):
+            i = count
+            elementos_que_tem_que_estar_negados.append(i)
+            count = i + n
+        i = aux
+
+    return elementos_que_tem_que_estar_negados            
+
+def regra_um(tabela):
+    variaveis = []
+    for x in tabela:
+        i = 0
+        while(i < 3):
+            variaveis.append(x[i])
+            i = i + 1
+
+
+
+
+001 = 1
+002 = 2
+011 = 3
+012 = 4
+101 = 5
+102 = 6
+111 = 7
+112 = 8 
+
+[1,2][3,4]
+[5,6][7,8]
